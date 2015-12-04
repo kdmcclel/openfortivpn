@@ -316,8 +316,10 @@ int auth_log_in(struct tunnel *tunnel)
 		ret = ERR_HTTP_BAD_RES_CODE;
 		goto end;
 	}
-	ret = get_auth_cookie(tunnel, res);
-	if (ret == ERR_HTTP_NO_COOKIE) {
+
+	if (!tunnel->config->two_factor) {
+		ret = get_auth_cookie(tunnel, res);
+	} else {
 		// Do we need to do two-factor authentication?
 		ret = get_value_from_response(res, "tokeninfo=", token, 128);
 		if (ret != 1 || strlen(token) < 1) {

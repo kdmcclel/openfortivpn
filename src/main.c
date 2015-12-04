@@ -27,7 +27,8 @@
 "                    [--no-routes] [--no-dns] [--pppd-log=<file>]\n" \
 "                    [--pppd-plugin=<file>] [--ca-file=<file>]\n" \
 "                    [--user-cert=<file>] [--user-key=<file>]\n" \
-"                    [--trusted-cert=<digest>] [-c <file>] [-v|-q]\n" \
+"                    [--trusted-cert=<digest>] [--two-factor]\n" \
+"                    [-c <file>] [-v|-q]\n" \
 "       openfortivpn --help\n" \
 "       openfortivpn --version\n"
 
@@ -63,6 +64,8 @@ USAGE \
 "                                <digest> is the X509 certificate's sha256 sum.\n" \
 "                                This option can be used multiple times to trust\n" \
 "                                several certificates.\n" \
+"  --two-factor                  Authenticate to the VPN gateway using two-factor\n" \
+"                                authentification.\n" \
 "  --pppd-log=<file>             Set pppd in debug mode and save its logs into\n" \
 "                                <file>.\n" \
 "  --pppd-plugin=<file>          Use specified pppd plugin instead of configuring\n"\
@@ -101,6 +104,7 @@ int main(int argc, char **argv)
 	cfg.set_routes = 1;
 	cfg.set_dns = 1;
 	cfg.verify_cert = 1;
+	cfg.two_factor = 0;
 
 	struct option long_options[] = {
 		{"help",          no_argument,       0, 'h'},
@@ -114,6 +118,7 @@ int main(int argc, char **argv)
 		{"user-cert",     required_argument, 0, 0},
 		{"user-key",      required_argument, 0, 0},
 		{"trusted-cert",  required_argument, 0, 0},
+		{"two-factor",    no_argument, &cfg.two_factor, 1},
 		{"pppd-log",      required_argument, 0, 0},
 		{"pppd-plugin",   required_argument, 0, 0},
 		{"plugin",        required_argument, 0, 0}, // deprecated

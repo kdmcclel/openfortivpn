@@ -38,6 +38,13 @@ Examples
   trusted-cert = e46d4aff08ba6914e64daa85bc6112a422fa7ce16631bff0b592a28556f993db
   ```
 
+* Using two-factor authentication (with a challenge sent through email/SMS after
+  initial login):
+
+  ```
+  openfortivpn vpn-gateway:8443 --two-factor
+  ```
+
 Building from source
 --------------------
 
